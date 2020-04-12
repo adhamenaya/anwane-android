@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="btn_subscribe_text">#252525</color>
+    <color name="btn_rounded_tick">#000000</color>
+
+    <color name="colorGrey">#6E6E6E</color>
+    <color name="colorPrimaryText">#252525</color>
+    <color name="colorSecondaryText">#6E6E6E</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorHeader">#000000</color>
+    <color name="colorTransparentWhite">#59FFFFFF</color>
+    <color name="colorDivider">#D5D5D5</color>
+    <color name="colorTransparent">#99000000</color>
+    <color name="bottomNavColor">#FA171921</color>
+    <color name="colorVideoOpacity">#CC000000</color>
+    <color name="colorBottomNavigation">#4A000000</color>
+    <color name="colorYellow">#FFEB3B</color>
+    <color name="shimmerBackgroundColor">#b1b1b1</color>
+    <color name="colorTransparentOutline">#2A2A2A</color>
+    <color name="colorCommentsBg">#57000000</color>
+    <color name="colorPlaceHolder">#E6E6E6</color>
+    <color name="colorChatSent">#CCFFFFFF</color>
+    <color name="colorChatReceive">#FFFFFF</color>
+
+    <color name="colorBottomNavigationHomeScreen">#FA171921</color>
+    <color name="colorHorizontalScrollViewHomeScreenFilters">#171921</color>
+    <color name="colorMainCategories">#0E2739</color>
+    <color name="colorMainTitle">#171921</color>
+    <color name="colorFabColor">#171921</color>
+    <color name="colorRippleTopNav">#1b4563</color>
+    <color name="colorRippleSubNav">#ffffff</color>
+    <color name="colorSecondary">#ffffff</color>
+    <color name="textPrimary">#1E1E1E</color>
+    <color name="message_dialog_background">#1B4563</color>
+</resources>
