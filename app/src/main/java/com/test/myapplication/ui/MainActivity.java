@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         btnSearch = findViewById(R.id.btnSearch);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
+
+        //adham
+        getSupportActionBar().hide();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
