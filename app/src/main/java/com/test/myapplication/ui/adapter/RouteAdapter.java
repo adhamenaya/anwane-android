@@ -1,6 +1,8 @@
 package com.test.myapplication.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +53,17 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder.tvToIndex.setText(deliveryPlanItem.getNodeTo() + "");
             holder.tvToCode.setText(locations.get(deliveryPlanItem.getNodeTo()).getCode());
             holder.tvDistance.setText(deliveryPlanItem.getDistance() + "");
+
+            holder.btnRoute.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                            Uri.parse("http://maps.google.com/maps?saddr=" + deliveryPlanItem.getLatlonFrom() +
+                                    "&daddr=" + deliveryPlanItem.getLatlonTo()));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

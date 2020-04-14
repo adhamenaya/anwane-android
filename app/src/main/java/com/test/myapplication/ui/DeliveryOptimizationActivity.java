@@ -1,5 +1,6 @@
 package com.test.myapplication.ui;
 
+import android.content.DialogInterface;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,6 +55,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
         recyclerViewLocations = findViewById(R.id.recycler_view_locations);
         imageViewSpeechInput = findViewById(R.id.imageview_mic);
         locationsAdapter = new LocationsAdapter(getApplicationContext(), locationsItems);
+        getSupportActionBar().hide();
         configureLocationsList();
         btnAddNewLatLon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +178,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
                         locationsItem.setCode(shortCode);
                         locationsItems.add(locationsItem);
                         updateLocationsList();
+                        txtShortCode.setText("");
                     } else {
                         // something wrong in short code.
                     }
@@ -186,5 +190,21 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        new AlertDialog.Builder(this)
+                .setMessage("هل تريد فعلاً الخروج؟")
+                .setCancelable(false)
+                .setPositiveButton("نعم", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        DeliveryOptimizationActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton("لا", null)
+                .show();
+
     }
 }
