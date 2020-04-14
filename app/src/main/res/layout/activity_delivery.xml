@@ -5,33 +5,47 @@
     android:layout_height="match_parent"
     tools:context=".ui.DeliveryOptimizationActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:layout_centerInParent="true">
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_short_code"
-            android:singleLine="true"
-            android:hint="HA0213"/>
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_append_locations"
-            android:text="@string/append_location"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_short_code"
+                android:singleLine="true"
+                android:hint="HA0213"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_start_planning"
-            android:text="@string/start_planning"
-            android:layout_marginTop="12dp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_append_locations"
+                android:text="@string/append_location"/>
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view_locations"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_start_planning"
+                android:text="@string/start_planning"
+                android:layout_marginTop="12dp"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
 
 
 
