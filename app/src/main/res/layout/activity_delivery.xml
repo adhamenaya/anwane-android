@@ -20,6 +20,14 @@
             android:hint="HA0213"
             android:singleLine="true" />
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/mic"
+            android:id="@+id/imageview_mic"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="4dp"/>
+
         <Button
             android:id="@+id/btn_append_locations"
             android:layout_width="match_parent"
