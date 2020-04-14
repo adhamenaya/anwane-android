@@ -1,5 +1,6 @@
 package com.test.myapplication.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 
 import com.test.myapplication.R;
 import com.test.myapplication.model.DeliveryOptimizationResponse;
+import com.test.myapplication.model.DeliveryPlanItem;
 import com.test.myapplication.model.LatLongResponse;
 import com.test.myapplication.model.LocationsItem;
 import com.test.myapplication.model.OptimizedDeliveryRequest;
@@ -16,7 +18,6 @@ import com.test.myapplication.utils.ApiClient;
 import com.test.myapplication.utils.ApiInterface;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DeliveryOptimizationActivity extends AppCompatActivity{
+public class DeliveryOptimizationActivity extends AppCompatActivity {
 
     private ApiInterface apiInterface;
     private EditText txtShortCode;
@@ -50,7 +51,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity{
         btnAddNewLatLon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!txtShortCode.getText().toString().trim().equals("")) {
+                if (!txtShortCode.getText().toString().trim().equals("")) {
                     getLatLon(txtShortCode.getText().toString().trim());
                 }
             }
@@ -59,7 +60,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity{
         btnStartPlanning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(locationsItems.size() > 0) {
+                if (locationsItems.size() > 0) {
                     optimizedDelivery(locationsItems);
                 }
             }
@@ -81,8 +82,18 @@ public class DeliveryOptimizationActivity extends AppCompatActivity{
         call.enqueue(new Callback<DeliveryOptimizationResponse>() {
             @Override
             public void onResponse(Call<DeliveryOptimizationResponse> call, Response<DeliveryOptimizationResponse> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     if (response.body().isSuccess()) {
+                        Intent myIntent = new Intent(DeliveryOptimizationActivity.this, DeliveryOptimizationResultActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("routes",
+                                (ArrayList<DeliveryPlanItem>) response.body().getResult().getDeliveryPlan()); //Optional parameters
+                        bundle.putParcelableArrayList("locations",
+                                (ArrayList<LocationsItem>) locationsItemList); //Optional parameters
+
+
+                        myIntent.putExtras(bundle);
+                        startActivity(myIntent);
                         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -107,10 +118,11 @@ public class DeliveryOptimizationActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<LatLongResponse> call, Response<LatLongResponse> response) {
                 if (response.isSuccessful()) {
-                    if(response.body().isSuccess()) {
+                    if (response.body().isSuccess()) {
                         String latlon = response.body().getAddress().getLatlon();
                         LocationsItem locationsItem = new LocationsItem();
                         locationsItem.setLatlon(latlon);
+                        locationsItem.setCode(shortCode);
                         locationsItems.add(locationsItem);
                         updateLocationsList();
                     } else {

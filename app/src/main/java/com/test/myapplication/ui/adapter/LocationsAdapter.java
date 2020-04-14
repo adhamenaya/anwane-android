@@ -49,6 +49,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             double longitude = Double.parseDouble(location[1]);
             String formattedLocationToDisplay = decimalFormat.format(latitude) + "," + decimalFormat.format(longitude);
             holder.tvLocation.setText(formattedLocationToDisplay);
+            holder.tvCode.setText(locationsItem.getCode());
         }
     }
 
@@ -61,6 +62,8 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public class LocationViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_location)
         TextView tvLocation;
+        @BindView(R.id.tvCode)
+        TextView tvCode;
 
         public LocationViewHolder(View view) {
             super(view);

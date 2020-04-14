@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content" android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="12.2522222,14.255233"
+        android:id="@+id/tvCode"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,4 +20,4 @@
         android:layout_centerHorizontal="true"
         android:padding="10dp"/>
 
-</RelativeLayout>
+</LinearLayout>
