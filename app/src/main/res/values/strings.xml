@@ -33,6 +33,8 @@
     <string name="share_code_btn">مشاركة العنوان المختصر</string>
     <string name="search_short_code">ABC123</string>
     <string name="search">بحث</string>
+    <string name="append_location">أضف إحداثيات</string>
+    <string name="start_planning">التوصيل المحسن</string>
 
 
 
