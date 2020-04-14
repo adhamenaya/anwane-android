@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="30dp"
     tools:context=".ui.DeliveryOptimizationActivity">
 
 
@@ -17,7 +18,8 @@
             android:id="@+id/txt_short_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="HA0213"
+            android:hint="أدخل العنوان المختصر من 6 خانات"
+            android:maxLength="6"
             android:singleLine="true" />
 
         <Button
@@ -32,8 +34,8 @@
         android:id="@+id/recycler_view_locations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search"
-        android:layout_above="@+id/btn_start_planning" />
+        android:layout_above="@+id/btn_start_planning"
+        android:layout_below="@+id/search" />
 
     <Button
         android:id="@+id/btn_start_planning"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -31,6 +32,7 @@ import com.test.myapplication.utils.ApiInterface;
 import com.test.myapplication.utils.Constants;
 
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,19 +44,19 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
-    private ApiInterface apiInterface;
-    private TextView tvShortAddress, tvLocationCoordinates;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     LocationManager locationManager;
     String provider;
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
-    private GoogleMap mMap;
-    private Button btnShareCode;
     String shortCode = "";
     Marker marker;
     EditText txtSearchCode;
     Button btnSearch;
-
+    Button btnDelivery;
+    private ApiInterface apiInterface;
+    private TextView tvShortAddress, tvLocationCoordinates;
+    private GoogleMap mMap;
+    private Button btnShareCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +68,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         btnShareCode = findViewById(R.id.btn_share_address_code);
         txtSearchCode = findViewById(R.id.txtSearchCode);
         btnSearch = findViewById(R.id.btnSearch);
+        btnDelivery = findViewById(R.id.btnDelivery);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
+
+        // RTL
+        Configuration configuration = getResources().getConfiguration();
+        configuration.setLayoutDirection(new Locale("ar"));
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+
 
         //adham
         getSupportActionBar().hide();
@@ -87,9 +96,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!txtSearchCode.getText().toString().trim().equals("")) {
+                if (!txtSearchCode.getText().toString().trim().equals("")) {
                     getLatLon(txtSearchCode.getText().toString().trim());
                 }
+            }
+        });
+        btnDelivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(MainActivity.this, DeliveryOptimizationActivity.class);
+                startActivity(in);
             }
         });
 
@@ -122,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             @Override
             public void onResponse(Call<LatLongResponse> call, Response<LatLongResponse> response) {
                 if (response.isSuccessful()) {
-                    if(response.body().isSuccess()) {
+                    if (response.body().isSuccess()) {
                         String latlon = response.body().getAddress().getLatlon();
                         Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latlon);
                         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);

@@ -16,31 +16,43 @@
         android:id="@+id/img_logo"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/logo"
+        android:layout_alignParentRight="true"
+        android:layout_margin="40dp"
         android:layout_marginBottom="10dp"
-        android:layout_margin="40dp">
+        android:src="@drawable/logo">
 
     </androidx.appcompat.widget.AppCompatImageView>
+
+    <Button
+        android:id="@+id/btnDelivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="40dp"
+        android:text="توصيل"></Button>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal"
         android:layout_margin="30dp"
-        android:layout_alignParentBottom="true"
         android:background="@color/colorWhite"
         android:orientation="vertical"
         android:padding="10dp">
+
         <TextView
             android:id="@+id/short_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/tabloid"
             android:text="@string/pending"
-            android:textColor="@color/colorBlack"  android:fontFamily="@font/tabloid"
+            android:textColor="@color/colorBlack"
             android:textSize="50sp" />
+
         <TextView
             android:id="@+id/location_coordinates"
             android:layout_width="wrap_content"
@@ -48,9 +60,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:text="@string/pending" android:fontFamily="@font/tabloid"
+            android:fontFamily="@font/tabloid"
+            android:text="@string/pending"
             android:textColor="@color/colorGrey"
             android:textSize="18sp" />
+
         <Button
             android:id="@+id/btn_share_address_code"
             android:layout_width="match_parent"
@@ -76,7 +90,7 @@
             android:id="@+id/txtSearchCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_short_code" />
+            android:hint="أدخل العنوان المختصر من 6 خانات" />
 
         <Button
             android:id="@+id/btnSearch"
