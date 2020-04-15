@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         btnSearch = findViewById(R.id.btnSearch);
         btnDelivery = findViewById(R.id.btnDelivery);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        provider = locationManager.getBestProvider(new Criteria(), false);
+        provider = LocationManager.GPS_PROVIDER;
 
         // RTL
         Configuration configuration = getResources().getConfiguration();
