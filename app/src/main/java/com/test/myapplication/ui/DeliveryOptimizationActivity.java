@@ -1,5 +1,6 @@
 package com.test.myapplication.ui;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -33,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DeliveryOptimizationActivity extends AppCompatActivity {
+public class DeliveryOptimizationActivity extends AppCompatActivity  {
 
     private ApiInterface apiInterface;
     private EditText txtShortCode;
@@ -44,6 +45,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
     private LocationsAdapter locationsAdapter;
     private ImageView imageViewSpeechInput;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    private ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,18 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
         recyclerViewLocations = findViewById(R.id.recycler_view_locations);
         imageViewSpeechInput = findViewById(R.id.imageview_mic);
         locationsAdapter = new LocationsAdapter(getApplicationContext(), locationsItems);
+        configureProgressDialog();
+        locationsAdapter.setOnLocationCallback(new LocationsAdapter.OnLocationCallback() {
+            @Override
+            public void onLocationDeleted(LocationsItem locationsItem) {
+                for(int i = 0; i < locationsItems.size(); i++) {
+                    if(locationsItems.get(i).getLatlon().equals(locationsItem.getLatlon())) {
+                        locationsItems.remove(i);
+                        updateLocationsList();
+                    }
+                }
+            }
+        });
         getSupportActionBar().hide();
         configureLocationsList();
         btnAddNewLatLon.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +96,11 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void configureProgressDialog() {
+        dialog = new ProgressDialog(DeliveryOptimizationActivity.this);
+        dialog.setMessage(getResources().getString(R.string.progress_message));
     }
 
     private void configureLocationsList() {
@@ -129,6 +148,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
     }
 
     public void optimizedDelivery(List<LocationsItem> locationsItemList) {
+        dialog.show();
         Call<DeliveryOptimizationResponse> call;
         OptimizedDeliveryRequest request = new OptimizedDeliveryRequest();
         request.setLocations(locationsItemList);
@@ -136,7 +156,8 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
         call.enqueue(new Callback<DeliveryOptimizationResponse>() {
             @Override
             public void onResponse(Call<DeliveryOptimizationResponse> call, Response<DeliveryOptimizationResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && dialog.isShowing()) {
+                    dialog.dismiss();
                     if (response.body().isSuccess()) {
                         Intent myIntent = new Intent(DeliveryOptimizationActivity.this, DeliveryOptimizationResultActivity.class);
                         Bundle bundle = new Bundle();
@@ -155,7 +176,8 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DeliveryOptimizationResponse> call, Throwable t) {
                 call.cancel();
-
+                if(dialog.isShowing())
+                    dialog.dismiss();
             }
         });
     }
@@ -165,12 +187,14 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
     }
 
     public void getLatLon(String shortCode) {
+        dialog.show();
         Call<LatLongResponse> call;
         call = apiInterface.getLatLon(shortCode, "ps");
         call.enqueue(new Callback<LatLongResponse>() {
             @Override
             public void onResponse(Call<LatLongResponse> call, Response<LatLongResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && dialog.isShowing()) {
+                    dialog.dismiss();
                     if (response.body().isSuccess()) {
                         String latlon = response.body().getAddress().getLatlon();
                         LocationsItem locationsItem = new LocationsItem();
@@ -188,6 +212,8 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LatLongResponse> call, Throwable t) {
                 call.cancel();
+                if(dialog.isShowing())
+                    dialog.dismiss();
             }
         });
     }

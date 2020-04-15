@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.test.myapplication.R;
@@ -21,11 +22,16 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     List<LocationsItem> locationsItems;
     Context context;
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
+    OnLocationCallback onLocationCallback;
 
 
     public LocationsAdapter(Context context, List<LocationsItem> locationsItems) {
         this.locationsItems = locationsItems;
         this.context = context;
+    }
+
+    public void setOnLocationCallback(OnLocationCallback onLocationCallback) {
+        this.onLocationCallback = onLocationCallback;
     }
 
     public void setLocationsItems(List<LocationsItem> locationsItems) {
@@ -50,6 +56,12 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             String formattedLocationToDisplay = decimalFormat.format(latitude) + "," + decimalFormat.format(longitude);
             holder.tvLocation.setText(formattedLocationToDisplay);
             holder.tvCode.setText(locationsItem.getCode());
+            holder.btnLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onLocationCallback.onLocationDeleted(locationsItem);
+                }
+            });
         }
     }
 
@@ -64,11 +76,17 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvLocation;
         @BindView(R.id.tvCode)
         TextView tvCode;
+        @BindView(R.id.btn_delete_location)
+        Button btnLocation;
 
         public LocationViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface OnLocationCallback {
+        void onLocationDeleted(LocationsItem locationsItem);
     }
 }
 
