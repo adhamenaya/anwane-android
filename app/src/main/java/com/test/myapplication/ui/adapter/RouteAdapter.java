@@ -57,11 +57,16 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder.btnRoute.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                 /*   Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                             Uri.parse("http://maps.google.com/maps?saddr=" + deliveryPlanItem.getLatlonFrom() +
                                     "&daddr=" + deliveryPlanItem.getLatlonTo()));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                    context.startActivity(intent); */
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + deliveryPlanItem.getLatlonFrom());
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    context.startActivity(mapIntent);
                 }
             });
         }

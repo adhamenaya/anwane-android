@@ -14,21 +14,36 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/txt_short_code"
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/chAddStartPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="البدء من موقعي الحالي؟"></com.google.android.material.checkbox.MaterialCheckBox>
+
+        <LinearLayout
+            android:id="@+id/search0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="أدخل العنوان المختصر من 6 خانات"
-            android:maxLength="6"
-            android:singleLine="true" />
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/mic"
-            android:id="@+id/imageview_mic"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="4dp"/>
+            <EditText
+                android:id="@+id/txt_short_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:hint="أدخل العنوان المختصر من 6 خانات"
+                android:maxLength="6"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/imageview_mic"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="4dp" android:text="إدخال صوتي"
+                android:layout_weight="1"></Button>
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_append_locations"

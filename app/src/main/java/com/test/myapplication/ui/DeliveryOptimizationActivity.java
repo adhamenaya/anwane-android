@@ -1,14 +1,16 @@
 package com.test.myapplication.ui;
 
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.test.myapplication.R;
@@ -35,6 +37,7 @@ import retrofit2.Response;
 
 public class DeliveryOptimizationActivity extends AppCompatActivity {
 
+    private final int REQ_CODE_SPEECH_INPUT = 100;
     private ApiInterface apiInterface;
     private EditText txtShortCode;
     private Button btnAddNewLatLon;
@@ -42,8 +45,10 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
     private List<LocationsItem> locationsItems = new ArrayList<>();
     private RecyclerView recyclerViewLocations;
     private LocationsAdapter locationsAdapter;
-    private ImageView imageViewSpeechInput;
-    private final int REQ_CODE_SPEECH_INPUT = 100;
+    private Button imageViewSpeechInput;
+    private CheckBox chAddStartPoint;
+    private ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +59,34 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
         btnStartPlanning = findViewById(R.id.btn_start_planning);
         recyclerViewLocations = findViewById(R.id.recycler_view_locations);
         imageViewSpeechInput = findViewById(R.id.imageview_mic);
+        chAddStartPoint = findViewById(R.id.chAddStartPoint);
+
         locationsAdapter = new LocationsAdapter(getApplicationContext(), locationsItems);
+        configureProgressDialog();
+        locationsAdapter.setOnLocationCallback(new LocationsAdapter.OnLocationCallback() {
+            @Override
+            public void onLocationDeleted(LocationsItem locationsItem) {
+                for (int i = 0; i < locationsItems.size(); i++) {
+                    if (locationsItems.get(i).getLatlon().equals(locationsItem.getLatlon())) {
+                        locationsItems.remove(i);
+                        updateLocationsList();
+                    }
+                }
+            }
+        });
+
+        chAddStartPoint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(getApplicationContext(), "تم إضافة موقعك كبداية لمسار رحلة التوصيل", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "تم إزالة موقعك من مسار رحلة التوصيل", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
         getSupportActionBar().hide();
         configureLocationsList();
         btnAddNewLatLon.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +116,11 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
 
     }
 
+    private void configureProgressDialog() {
+        dialog = new ProgressDialog(DeliveryOptimizationActivity.this);
+        dialog.setMessage(getResources().getString(R.string.progress_message));
+    }
+
     private void configureLocationsList() {
         recyclerViewLocations.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerViewLocations.setAdapter(locationsAdapter);
@@ -91,7 +128,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
 
     /**
      * Showing google speech input dialog
-     * */
+     */
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -110,7 +147,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
 
     /**
      * Receiving speech input
-     * */
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -129,6 +166,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
     }
 
     public void optimizedDelivery(List<LocationsItem> locationsItemList) {
+        dialog.show();
         Call<DeliveryOptimizationResponse> call;
         OptimizedDeliveryRequest request = new OptimizedDeliveryRequest();
         request.setLocations(locationsItemList);
@@ -136,7 +174,8 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
         call.enqueue(new Callback<DeliveryOptimizationResponse>() {
             @Override
             public void onResponse(Call<DeliveryOptimizationResponse> call, Response<DeliveryOptimizationResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && dialog.isShowing()) {
+                    dialog.dismiss();
                     if (response.body().isSuccess()) {
                         Intent myIntent = new Intent(DeliveryOptimizationActivity.this, DeliveryOptimizationResultActivity.class);
                         Bundle bundle = new Bundle();
@@ -155,7 +194,8 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DeliveryOptimizationResponse> call, Throwable t) {
                 call.cancel();
-
+                if (dialog.isShowing())
+                    dialog.dismiss();
             }
         });
     }
@@ -165,12 +205,14 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
     }
 
     public void getLatLon(String shortCode) {
+        dialog.show();
         Call<LatLongResponse> call;
         call = apiInterface.getLatLon(shortCode, "ps");
         call.enqueue(new Callback<LatLongResponse>() {
             @Override
             public void onResponse(Call<LatLongResponse> call, Response<LatLongResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && dialog.isShowing()) {
+                    dialog.dismiss();
                     if (response.body().isSuccess()) {
                         String latlon = response.body().getAddress().getLatlon();
                         LocationsItem locationsItem = new LocationsItem();
@@ -188,6 +230,8 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LatLongResponse> call, Throwable t) {
                 call.cancel();
+                if (dialog.isShowing())
+                    dialog.dismiss();
             }
         });
     }
@@ -207,4 +251,6 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
                 .show();
 
     }
+
+
 }

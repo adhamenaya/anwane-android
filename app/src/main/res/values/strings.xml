@@ -32,12 +32,15 @@
     <string name="share_title">مشاركة عنوانك المختصر</string>
     <string name="share_code_btn">مشاركة العنوان المختصر</string>
     <string name="search_short_code">ABC123</string>
-    <string name="search">بحث</string>
-    <string name="append_location">أضف إحداثيات</string>
-    <string name="start_planning">التوصيل المحسن</string>
+    <string name="search">عرض العنوان</string>
+    <string name="append_location">أضف نقطة توصيل</string>
+    <string name="start_planning">بناء خطة التوصيل</string>
     <string name="speech_prompt">Say something&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
     <string name="tap_on_mic">Tap on mic to speak</string>
+    <string name="delete_location">حذف</string>
+    <string name="progress_message">جاري تنفيذ طلبك…</string>
+
 
 
 </resources>

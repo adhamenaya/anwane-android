@@ -73,6 +73,7 @@
             android:text="@string/share_code_btn"
             android:visibility="gone"
             tools:visibility="visible" />
+        
     </LinearLayout>
 
 

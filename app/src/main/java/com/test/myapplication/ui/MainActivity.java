@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         btnSearch = findViewById(R.id.btnSearch);
         btnDelivery = findViewById(R.id.btnDelivery);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        provider = locationManager.getBestProvider(new Criteria(), false);
+        provider = LocationManager.GPS_PROVIDER;
 
         // RTL
         Configuration configuration = getResources().getConfiguration();
@@ -280,7 +279,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     }
 
     private void shareShortAddress(String shortAddress) {
-        String shareBody = "Your short address code: " + shortAddress;
+        // String shareBody = "Your short address code: " + shortAddress;
+        String shareBody = shortAddress;
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_title));
