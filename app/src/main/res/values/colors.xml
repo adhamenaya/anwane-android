@@ -5,7 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="btn_subscribe_text">#252525</color>
     <color name="btn_rounded_tick">#000000</color>
-
+    <color name="gray">#F5F5F5</color>
     <color name="colorGrey">#6E6E6E</color>
     <color name="colorPrimaryText">#252525</color>
     <color name="colorSecondaryText">#6E6E6E</color>

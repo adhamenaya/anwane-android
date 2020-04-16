@@ -56,6 +56,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             String formattedLocationToDisplay = decimalFormat.format(latitude) + "," + decimalFormat.format(longitude);
             holder.tvLocation.setText(formattedLocationToDisplay);
             holder.tvCode.setText(locationsItem.getCode());
+            holder.tvIndex.setText(String.valueOf(position + 1));
             holder.btnLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -71,6 +72,10 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
+    public interface OnLocationCallback {
+        void onLocationDeleted(LocationsItem locationsItem);
+    }
+
     public class LocationViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_location)
         TextView tvLocation;
@@ -78,15 +83,13 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvCode;
         @BindView(R.id.btn_delete_location)
         Button btnLocation;
+        @BindView(R.id.tvIndex)
+        TextView tvIndex;
 
         public LocationViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
-    }
-
-    public interface OnLocationCallback {
-        void onLocationDeleted(LocationsItem locationsItem);
     }
 }
 

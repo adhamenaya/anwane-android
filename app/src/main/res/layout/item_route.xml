@@ -2,55 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingStart="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="10dp"
+    android:paddingRight="10dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:orientation="vertical">
 
-        <TextView
+        <Button
             android:id="@+id/tvFromIndex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/btn"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="15"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold"></Button>
 
         <TextView
             android:id="@+id/tvFromCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="11"
+            android:textAlignment="center"
+            android:textSize="16sp"></TextView>
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvDistance"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"></TextView>
-
+        android:layout_weight="4"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="11"
+        android:textAlignment="center"
+        android:textSize="20sp"></TextView>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvToIndex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/btn"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="15"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold"></TextView>
 
         <TextView
             android:id="@+id/tvToCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="22"
+            android:textAlignment="center"
+            android:textSize="16sp"></TextView>
     </LinearLayout>
 
     <Button
         android:id="@+id/btnRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_weight="1"
-        android:text="الطريق"></Button>
-
+        android:background="@color/btn2"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="الطريق"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="17sp"></Button>
 </LinearLayout>

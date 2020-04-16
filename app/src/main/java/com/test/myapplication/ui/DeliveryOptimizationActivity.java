@@ -93,7 +93,7 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!txtShortCode.getText().toString().trim().equals("")) {
-                    getLatLon(txtShortCode.getText().toString().trim());
+                    getLatLon(txtShortCode.getText().toString().trim().toUpperCase());
                 }
             }
         });

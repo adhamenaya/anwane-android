@@ -3,54 +3,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
+    android:background="@color/gray"
     tools:context=".ui.DeliveryOptimizationActivity">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_logo"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/logo">
+
+    </androidx.appcompat.widget.AppCompatImageView>
 
     <LinearLayout
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/img_logo"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/chAddStartPoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="البدء من موقعي الحالي؟"></com.google.android.material.checkbox.MaterialCheckBox>
 
         <LinearLayout
             android:id="@+id/search0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal">
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/txt_short_code"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:hint="أدخل العنوان المختصر من 6 خانات"
+                android:inputType="textCapSentences"
                 android:maxLength="6"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textAllCaps="true" />
 
             <Button
                 android:id="@+id/imageview_mic"
-                android:layout_width="0dp"
+                style="@style/btnStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="4dp" android:text="إدخال صوتي"
-                android:layout_weight="1"></Button>
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:text="إدخال صوتي"
+                android:visibility="gone"></Button>
+
+            <Button
+                android:id="@+id/btn_append_locations"
+                style="@style/btnStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/append_location" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chAddStartPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="end"
+                android:padding="0dp"
+                android:text="البدء من موقعي الحالي؟"
+                android:visibility="gone"></com.google.android.material.checkbox.MaterialCheckBox>
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="تجاهل موقعي الحالي"
+                android:textOn="إنطلق من موقعي الحالي"
+                android:visibility="gone"></ToggleButton>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_append_locations"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/append_location" />
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -58,14 +91,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_start_planning"
-        android:layout_below="@+id/search" />
+        android:layout_below="@+id/search"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"  />
 
     <Button
         android:id="@+id/btn_start_planning"
+        style="@style/btnStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/start_planning" />
 
 

@@ -18,19 +18,51 @@
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginRight="30dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/logo">
 
     </androidx.appcompat.widget.AppCompatImageView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_logo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/txtSearchCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="أدخل العنوان المختصر من 6 خانات" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnDelivery"
+        style="@style/btnStyle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
         android:text="توصيل"></Button>
 
     <LinearLayout
@@ -48,10 +80,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/tabloid"
             android:text="@string/pending"
             android:textColor="@color/colorBlack"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/location_coordinates"
@@ -60,43 +92,20 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:fontFamily="@font/tabloid"
+            android:padding="5dp"
             android:text="@string/pending"
             android:textColor="@color/colorGrey"
             android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_share_address_code"
+            style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/share_code_btn"
-            android:visibility="gone"
-            tools:visibility="visible" />
-        
+            android:visibility="gone" />
+
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/img_logo"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <EditText
-            android:id="@+id/txtSearchCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="أدخل العنوان المختصر من 6 خانات" />
-
-        <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/search" />
-    </LinearLayout>
 </RelativeLayout>
