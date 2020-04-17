@@ -36,4 +36,15 @@
     <color name="colorSecondary">#ffffff</color>
     <color name="textPrimary">#1E1E1E</color>
     <color name="message_dialog_background">#1B4563</color>
+
+
+    <color name="color1">#1E90FF</color>
+    <color name="color2">#4169E1</color>
+    <color name="color3">#007bff</color>
+
+    <color name="color4">#66b7c4</color>
+    <color name="color5">#07a0b8</color>
+    <color name="color6">#17a2b8</color>
+
+
 </resources>

@@ -11,13 +11,13 @@
     <style name="btnStyle">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:background">@color/btn</item>
+        <item name="android:background">@drawable/btn</item>
         <item name="android:fontFamily">@font/dejavuserif</item>
     </style>
     <style name="btnStyle2">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:background">@color/btn2</item>
+        <item name="android:background">@drawable/btn2</item>
         <item name="android:fontFamily">@font/dejavuserif</item>
     </style>
 
