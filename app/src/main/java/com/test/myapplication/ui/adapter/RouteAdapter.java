@@ -53,7 +53,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder.tvToIndex.setText(deliveryPlanItem.getNodeTo() + "");
             holder.tvToCode.setText(locations.get(deliveryPlanItem.getNodeTo()).getCode());
             double distance = Math.round((deliveryPlanItem.getDistance() / 1000) * 10) / 10.0;
-            holder.tvDistance.setText(distance + "كم ");
+            holder.tvDistance.setText(distance + " كم");
 
             holder.btnRoute.setOnClickListener(new View.OnClickListener() {
                 @Override

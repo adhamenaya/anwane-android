@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="3dp"
+    android:background="@color/colorWhite"
     android:orientation="horizontal"
+    android:padding="10dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:padding="10dp">
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/tvIndex"
@@ -36,18 +38,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:paddingStart="3dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="3dp"
             android:textColor="@color/colorBlack"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:textStyle="bold"
-            tools:text="12.2522222,14.255233" />
+            tools:text="ABCDEF3" />
 
         <TextView
             android:id="@+id/tv_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp"
+            android:textSize="15sp"
             tools:text="12.2522222,14.255233" />
     </LinearLayout>
 
@@ -59,10 +63,9 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:background="@drawable/btn2"
-        android:padding="10dp"
-        android:text="حذف"
+        android:text="إزالة"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textSize="17sp" />
+        android:textSize="15sp" />
 
 </RelativeLayout>

@@ -38,6 +38,9 @@ import retrofit2.Response;
 public class DeliveryOptimizationActivity extends AppCompatActivity {
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    // current location
+    String currLocationLatlon = "";
+    String currLocationCode = "";
     private ApiInterface apiInterface;
     private EditText txtShortCode;
     private Button btnAddNewLatLon;
@@ -60,6 +63,12 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
         recyclerViewLocations = findViewById(R.id.recycler_view_locations);
         imageViewSpeechInput = findViewById(R.id.imageview_mic);
         chAddStartPoint = findViewById(R.id.chAddStartPoint);
+
+        try {
+            currLocationCode = getIntent().getExtras().getString("currLocationCode");
+            currLocationLatlon = getIntent().getExtras().getString("currLocationLatlon");
+        } catch (NullPointerException ne) {
+        }
 
         locationsAdapter = new LocationsAdapter(getApplicationContext(), locationsItems);
         configureProgressDialog();
@@ -184,7 +193,8 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
                         bundle.putParcelableArrayList("locations",
                                 (ArrayList<LocationsItem>) locationsItemList); //Optional parameters
 
-
+                        myIntent.putExtra("currLocationCode", currLocationCode);
+                        myIntent.putExtra("currLocationLatlon", currLocationLatlon);
                         myIntent.putExtras(bundle);
                         startActivity(myIntent);
                     }

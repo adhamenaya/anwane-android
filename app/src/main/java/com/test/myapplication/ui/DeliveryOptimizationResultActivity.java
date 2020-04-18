@@ -1,6 +1,8 @@
 package com.test.myapplication.ui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class DeliveryOptimizationResultActivity extends AppCompatActivity {
 
+    // current location
+    String currLocationLatlon = "";
+    String currLocationCode = "";
     private List<DeliveryPlanItem> deliveryPlanItems = new ArrayList<>();
     private List<LocationsItem> locations = new ArrayList<>();
     private RecyclerView rvResults;
@@ -41,15 +46,19 @@ public class DeliveryOptimizationResultActivity extends AppCompatActivity {
             rvResults.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             rvResults.setAdapter(routeAdapter);
         }
-
+        try {
+            currLocationCode = getIntent().getExtras().getString("currLocationCode");
+            currLocationLatlon = getIntent().getExtras().getString("currLocationLatlon");
+        } catch (NullPointerException ne) {
+        }
         btnShowAllRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?saddr=" + deliveryPlanItem.getLatlonFrom() +
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?saddr=" + currLocationLatlon +
                                 "&daddr=" + buildAllDestinations()));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
     }

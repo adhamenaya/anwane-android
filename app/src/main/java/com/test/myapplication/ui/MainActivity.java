@@ -104,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(MainActivity.this, DeliveryOptimizationActivity.class);
+                in.putExtra("currLocationCode", tvShortAddress.getText().toString().trim());
+                in.putExtra("currLocationLatlon", tvLocationCoordinates.getText().toString().trim());
                 startActivity(in);
             }
         });
