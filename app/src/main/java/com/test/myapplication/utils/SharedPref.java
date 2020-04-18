@@ -18,6 +18,9 @@ public class SharedPref {
     public static final String LOGIN_ID = "loginId";
     public static final String LOGIN_TYPE = "loginType";
     public static final String USER_IMAGE = "userImage";
+    public static final String SHORT_CODE = "shortCode";
+    public static final String LOCATION_COORDINATES = "locationCoordinates";
+    public static final String FORMATTED_LOCATION_COORDINATES = "formattedLocationCoordinates";
 
 
     private SharedPref() {

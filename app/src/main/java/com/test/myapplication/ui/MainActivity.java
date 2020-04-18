@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,6 +30,7 @@ import com.test.myapplication.model.ShortAddressResponse;
 import com.test.myapplication.utils.ApiClient;
 import com.test.myapplication.utils.ApiInterface;
 import com.test.myapplication.utils.Constants;
+import com.test.myapplication.utils.SharedPref;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private TextView tvShortAddress, tvLocationCoordinates;
     private GoogleMap mMap;
     private Button btnShareCode;
+    private ImageView imageViewRefreshLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         txtSearchCode = findViewById(R.id.txtSearchCode);
         btnSearch = findViewById(R.id.btnSearch);
         btnDelivery = findViewById(R.id.btnDelivery);
+        imageViewRefreshLocation = findViewById(R.id.image_view_refresh);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = LocationManager.GPS_PROVIDER;
 
@@ -108,6 +112,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             }
         });
 
+        imageViewRefreshLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    SharedPref.putString(SharedPref.SHORT_CODE, null);
+                    locationManager.requestLocationUpdates(provider, 2000, 40, MainActivity.this);
+                }
+            }
+        });
+
     }
 
     public void getShortAddress(String location) {
@@ -120,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     shortCode = response.body().getAddress().getShortCode();
                     btnShareCode.setVisibility(View.VISIBLE);
                     tvShortAddress.setText(response.body().getAddress().getShortCode());
+                    SharedPref.putString(SharedPref.SHORT_CODE, shortCode);
                 }
             }
 
@@ -244,17 +261,28 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     @Override
     public void onLocationChanged(Location location) {
-        String formattedLocationToDisplay = decimalFormat.format(location.getLatitude()) + "," + decimalFormat.format(location.getLongitude());
-        String locationString = location.getLatitude() + "," + location.getLongitude();
-        tvLocationCoordinates.setText(formattedLocationToDisplay);
-        // Display location on a map
+        locationManager.removeUpdates(this); // to call location provider only once.
+        String shortCode = SharedPref.getString(SharedPref.SHORT_CODE, "");
+        if (shortCode == null || shortCode.equals("")) {
+            String formattedLocationToDisplay = decimalFormat.format(location.getLatitude()) + "," + decimalFormat.format(location.getLongitude());
+            String locationString = location.getLatitude() + "," + location.getLongitude();
+            tvLocationCoordinates.setText(formattedLocationToDisplay);
+            imageViewRefreshLocation.setVisibility(View.VISIBLE);
+            SharedPref.putString(SharedPref.LOCATION_COORDINATES, locationString);
+            SharedPref.putString(SharedPref.FORMATTED_LOCATION_COORDINATES, formattedLocationToDisplay);
+            // Display location on a map
+            displayMarker(location);
+            getShortAddress(locationString);
+        }
+    }
+
+    private void displayMarker(Location location) {
         LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
         if (marker != null) {
             marker.remove();
         }
         marker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("My current location"));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15.0f));
-        getShortAddress(locationString);
     }
 
     @Override
@@ -275,7 +303,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        checkLocationPermission();
+        String shortCode = SharedPref.getString(SharedPref.SHORT_CODE, "");
+        String locationCordnates = SharedPref.getString(SharedPref.LOCATION_COORDINATES, "");
+        String formattedLocationCorrdnates = SharedPref.getString(SharedPref.FORMATTED_LOCATION_COORDINATES, "");
+
+        if (shortCode != null && !shortCode.equals("")) {
+            // display cached location data
+            imageViewRefreshLocation.setVisibility(View.VISIBLE);
+            btnShareCode.setVisibility(View.VISIBLE);
+            tvLocationCoordinates.setText(formattedLocationCorrdnates);
+            tvShortAddress.setText(shortCode);
+            Location location = new Location(provider);
+            String[] locations = locationCordnates.split(",");
+            location.setLatitude(Double.parseDouble(locations[0]));
+            location.setLongitude(Double.parseDouble(locations[1]));
+            displayMarker(location);
+        } else {
+            // retrieve location from GPS
+            checkLocationPermission();
+        }
     }
 
     private void shareShortAddress(String shortAddress) {
