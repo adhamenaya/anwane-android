@@ -54,8 +54,9 @@ public class DeliveryOptimizationResultActivity extends AppCompatActivity {
         btnShowAllRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String startLatlon = deliveryPlanItems.get(0).getLatlonFrom();
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?saddr=" + currLocationLatlon +
+                        Uri.parse("http://maps.google.com/maps?saddr=" + startLatlon +
                                 "&daddr=" + buildAllDestinations()));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

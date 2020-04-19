@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="3dp"
@@ -12,89 +12,94 @@
     android:paddingRight="10dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/lytStart"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal"
+
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvFromIndex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/circle"
             android:gravity="center"
             android:padding="6dp"
             android:text="15"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="17sp"
-            android:textStyle="bold"></TextView>
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp"></TextView>
 
         <TextView
             android:id="@+id/tvFromCode"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
             android:text="11"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
-            android:textSize="16sp"
-            android:textStyle="bold"></TextView>
+            android:textSize="16sp"></TextView>
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvDistance"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
+        android:layout_toStartOf="@+id/lytEnd"
+        android:layout_toEndOf="@+id/lytStart"
         android:gravity="center"
         android:padding="10dp"
         android:text="11"
         android:textAlignment="center"
-        android:textSize="17sp"></TextView>
+        android:textSize="17sp"
+        android:textStyle="italic"></TextView>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/lytEnd"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:layout_toStartOf="@+id/btnRoute"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvToIndex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/circle"
             android:gravity="center"
             android:padding="6dp"
             android:text="14"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="17sp"
-            android:textStyle="bold"></TextView>
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp"></TextView>
 
         <TextView
             android:id="@+id/tvToCode"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
-            android:text="22"
+            android:text="22DD4E"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
-            android:textSize="16sp"
-            android:textStyle="bold"></TextView>
+            android:textSize="16sp"></TextView>
     </LinearLayout>
 
     <Button
         android:id="@+id/btnRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:background="@drawable/btn2"
-        android:text="الطريق"
+         android:text="الطريق"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="15sp"></Button>
-</LinearLayout>
+</RelativeLayout>

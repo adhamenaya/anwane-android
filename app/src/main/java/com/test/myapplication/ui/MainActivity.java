@@ -237,7 +237,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 }
                 return;
             }
-
         }
     }
 
@@ -283,8 +282,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         if (marker != null) {
             marker.remove();
         }
-        marker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("My current location"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15.0f));
+        marker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("موقعي الحالي"));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17.0f));
     }
 
     @Override

@@ -76,12 +76,6 @@
                 android:text="البدء من موقعي الحالي؟"
                 android:visibility="gone"></com.google.android.material.checkbox.MaterialCheckBox>
 
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="تجاهل موقعي الحالي"
-                android:textOn="إنطلق من موقعي الحالي"
-                android:visibility="gone"></ToggleButton>
         </LinearLayout>
     </LinearLayout>
 

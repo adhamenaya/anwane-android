@@ -67,6 +67,12 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
         try {
             currLocationCode = getIntent().getExtras().getString("currLocationCode");
             currLocationLatlon = getIntent().getExtras().getString("currLocationLatlon");
+
+            LocationsItem locationsItem = new LocationsItem();
+            locationsItem.setLatlon(currLocationLatlon);
+            locationsItem.setCode(currLocationCode);
+            locationsItems.add(locationsItem);
+            updateLocationsList();
         } catch (NullPointerException ne) {
         }
 
