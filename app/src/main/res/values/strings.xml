@@ -40,6 +40,9 @@
     <string name="tap_on_mic">Tap on mic to speak</string>
     <string name="delete_location">حذف</string>
     <string name="progress_message">جاري تنفيذ طلبك…</string>
+    <string name="progress_message_location">جاري تحديث الموقع…</string>
+    <string name="empty_message">لا يوجد بيانات</string>
+
 
 
 

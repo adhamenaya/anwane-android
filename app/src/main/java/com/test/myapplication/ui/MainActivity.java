@@ -1,6 +1,7 @@
 package com.test.myapplication.ui;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private GoogleMap mMap;
     private Button btnShareCode;
     private ImageView imageViewRefreshLocation;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         Configuration configuration = getResources().getConfiguration();
         configuration.setLayoutDirection(new Locale("ar"));
         getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+        configureProgressDialog();
 
 
         //adham
@@ -118,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
+                    dialog.show();
                     SharedPref.putString(SharedPref.SHORT_CODE, null);
                     locationManager.requestLocationUpdates(provider, 2000, 40, MainActivity.this);
                 }
@@ -132,17 +137,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         call.enqueue(new Callback<ShortAddressResponse>() {
             @Override
             public void onResponse(Call<ShortAddressResponse> call, Response<ShortAddressResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body().isSuccess() && dialog.isShowing()) {
+                    dialog.dismiss();
                     shortCode = response.body().getAddress().getShortCode();
                     btnShareCode.setVisibility(View.VISIBLE);
                     tvShortAddress.setText(response.body().getAddress().getShortCode());
                     SharedPref.putString(SharedPref.SHORT_CODE, shortCode);
+                } else {
+                    if(!response.body().isSuccess()) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.empty_message), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ShortAddressResponse> call, Throwable t) {
                 call.cancel();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         });
     }
@@ -257,6 +270,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 == PackageManager.PERMISSION_GRANTED) {
             locationManager.removeUpdates(this);
         }
+    }
+
+    private void configureProgressDialog() {
+        dialog = new ProgressDialog(MainActivity.this);
+        dialog.setMessage(getResources().getString(R.string.progress_message_location));
     }
 
     @Override
