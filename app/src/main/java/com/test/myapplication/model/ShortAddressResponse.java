@@ -6,7 +6,8 @@ public class ShortAddressResponse{
 
 	@SerializedName("address")
 	private Address address;
-
+	@SerializedName("success")
+	private boolean success;
 	public void setAddress(Address address){
 		this.address = address;
 	}
@@ -16,10 +17,18 @@ public class ShortAddressResponse{
 	}
 
 	@Override
- 	public String toString(){
-		return 
-			"ShortAddressResponse{" + 
-			"address = '" + address + '\'' + 
-			"}";
-		}
+	public String toString() {
+		return "ShortAddressResponse{" +
+				"address=" + address +
+				", success=" + success +
+				'}';
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 }
