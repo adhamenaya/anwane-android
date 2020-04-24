@@ -145,8 +145,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         call.enqueue(new Callback<ShortAddressResponse>() {
             @Override
             public void onResponse(Call<ShortAddressResponse> call, Response<ShortAddressResponse> response) {
-                if (response.isSuccessful() && response.body().isSuccess() && dialog.isShowing()) {
-                    dialog.dismiss();
+                if (response.isSuccessful() && response.body().isSuccess()) {
+                    if (dialog != null && dialog.isShowing()) dialog.dismiss();
                     shortCode = response.body().getAddress().getShortCode();
                     btnShareCode.setVisibility(View.VISIBLE);
                     tvShortAddress.setText(response.body().getAddress().getShortCode());
