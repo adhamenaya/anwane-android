@@ -22,8 +22,8 @@
 
         <TextView
             android:id="@+id/tvFromIndex"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/circle"
             android:gravity="center"
             android:padding="6dp"
@@ -38,25 +38,40 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
-            android:text="11"
+            android:text="AWD4Q2"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
             android:textSize="16sp"></TextView>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvDistance"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@+id/lytEnd"
-        android:layout_toEndOf="@+id/lytStart"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="11"
-        android:textAlignment="center"
-        android:textSize="17sp"
-        android:textStyle="italic"></TextView>
+        android:layout_toEndOf="@+id/lytStart">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/colorPlaceHolder" />
+
+        <TextView
+            android:id="@+id/tvDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/colorWhite"
+            android:padding="10dp"
+            android:text="11"
+            android:textAlignment="center"
+            android:textSize="17sp"></TextView>
+
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/lytEnd"
@@ -68,8 +83,8 @@
 
         <TextView
             android:id="@+id/tvToIndex"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/circle"
             android:gravity="center"
             android:padding="6dp"
@@ -92,14 +107,13 @@
 
     <Button
         android:id="@+id/btnRoute"
+        style="@style/btnStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
-        android:background="@drawable/btn2"
-         android:text="الطريق"
-        android:textAlignment="center"
-        android:textColor="@color/colorWhite"
-        android:textSize="15sp"></Button>
+        android:text="الطريق"
+        android:textAlignment="center" />
 </RelativeLayout>

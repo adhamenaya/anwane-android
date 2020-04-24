@@ -112,9 +112,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(MainActivity.this, DeliveryOptimizationActivity.class);
-                in.putExtra("currLocationCode", tvShortAddress.getText().toString().trim());
-                in.putExtra("currLocationLatlon", tvLocationCoordinates.getText().toString().trim());
-                startActivity(in);
+                String currLocationCode = tvShortAddress.getText().toString().trim().replace("...", "").replace(" ", "");
+                String currLocationLatlon = tvLocationCoordinates.getText().toString().trim().replace("...", "").replace(" ", "");
+                if (currLocationCode.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "إنتظر حتى تكون الخريطة جاهزة!", Toast.LENGTH_LONG).show();
+                } else {
+                    in.putExtra("currLocationCode", currLocationCode);
+                    in.putExtra("currLocationLatlon", currLocationLatlon);
+                    startActivity(in);
+                }
             }
         });
 
@@ -146,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     tvShortAddress.setText(response.body().getAddress().getShortCode());
                     SharedPref.putString(SharedPref.SHORT_CODE, shortCode);
                 } else {
-                    if(!response.body().isSuccess()) {
+                    if (!response.body().isSuccess()) {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.empty_message), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -176,7 +182,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                         mapIntent.setPackage("com.google.android.apps.maps");
                         startActivity(mapIntent);
                     } else {
-                        // something wrong in short code.
+                        if (!response.body().isSuccess()) {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.empty_message), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
@@ -301,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             marker.remove();
         }
         marker = mMap.addMarker(new MarkerOptions().position(currentLocation).title("موقعي الحالي"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16.0f));
     }
 
     @Override

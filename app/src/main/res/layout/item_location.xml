@@ -61,11 +61,9 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
+        style="@style/btnStyle2"
         android:background="@drawable/btn2"
         android:text="إزالة"
-        android:textAlignment="center"
-        android:padding="5dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="15sp" />
+        android:textAlignment="center" />
 
 </RelativeLayout>

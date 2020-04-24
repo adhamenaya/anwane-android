@@ -97,7 +97,6 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "تم إضافة موقعك كبداية لمسار رحلة التوصيل", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "تم إزالة موقعك من مسار رحلة التوصيل", Toast.LENGTH_LONG).show();
-
                 }
             }
         });
@@ -203,7 +202,11 @@ public class DeliveryOptimizationActivity extends AppCompatActivity {
                         myIntent.putExtra("currLocationLatlon", currLocationLatlon);
                         myIntent.putExtras(bundle);
                         startActivity(myIntent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "هناك خطأ. حاول مرة أخرى!", Toast.LENGTH_LONG).show();
                     }
+                }else{
+                    Toast.makeText(getApplicationContext(), "هناك خطأ. حاول مرة أخرى!", Toast.LENGTH_LONG).show();
                 }
             }
 
