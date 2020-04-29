@@ -7,12 +7,13 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
+    <!--  Permission required to draw floating widget over other apps  -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <application
         android:name="io.enwane.app.ui.App"
         android:allowBackup="true"
@@ -53,6 +54,10 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <service
+            android:name="io.enwane.app.utils.FloatingWidgetService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

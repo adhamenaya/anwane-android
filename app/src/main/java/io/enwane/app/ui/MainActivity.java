@@ -11,7 +11,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,12 +30,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.test.enwane.R;
-import io.enwane.app.model.LatLongResponse;
-import io.enwane.app.model.ShortAddressResponse;
-import io.enwane.app.utils.ApiClient;
-import io.enwane.app.utils.ApiInterface;
-import io.enwane.app.utils.Constants;
-import io.enwane.app.utils.SharedPref;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
@@ -41,6 +38,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import io.enwane.app.model.LatLongResponse;
+import io.enwane.app.model.ShortAddressResponse;
+import io.enwane.app.utils.ApiClient;
+import io.enwane.app.utils.ApiInterface;
+import io.enwane.app.utils.Constants;
+import io.enwane.app.utils.FloatingWidgetService;
+import io.enwane.app.utils.SharedPref;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,6 +52,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    /*  Permission request code to draw over other apps  */
+    private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
     LocationManager locationManager;
     String provider;
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     EditText txtSearchCode;
     Button btnSearch;
     Button btnDelivery;
+    ImageView ivFloat;
     private ApiInterface apiInterface;
     private TextView tvShortAddress, tvLocationCoordinates;
     private GoogleMap mMap;
@@ -75,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         btnSearch = findViewById(R.id.btnSearch);
         btnDelivery = findViewById(R.id.btnDelivery);
         imageViewRefreshLocation = findViewById(R.id.image_view_refresh);
+        ivFloat = findViewById(R.id.image_view_float);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = LocationManager.GPS_PROVIDER;
 
@@ -134,6 +142,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     SharedPref.putString(SharedPref.SHORT_CODE, null);
                     locationManager.requestLocationUpdates(provider, 2000, 40, MainActivity.this);
                 }
+            }
+        });
+
+        ivFloat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createFloatingWidget();
             }
         });
 
@@ -295,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             String locationString = location.getLatitude() + "," + location.getLongitude();
             tvLocationCoordinates.setText(formattedLocationToDisplay);
             imageViewRefreshLocation.setVisibility(View.VISIBLE);
+            ivFloat.setVisibility(View.VISIBLE);
             SharedPref.putString(SharedPref.LOCATION_COORDINATES, locationString);
             SharedPref.putString(SharedPref.FORMATTED_LOCATION_COORDINATES, formattedLocationToDisplay);
             // Display location on a map
@@ -337,6 +353,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         if (shortCode != null && !shortCode.equals("")) {
             // display cached location data
             imageViewRefreshLocation.setVisibility(View.VISIBLE);
+            ivFloat.setVisibility(View.VISIBLE);
             btnShareCode.setVisibility(View.VISIBLE);
             tvLocationCoordinates.setText(formattedLocationCorrdnates);
             tvShortAddress.setText(shortCode);
@@ -359,5 +376,49 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_title));
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+    }
+
+    /*  start floating widget service  */
+    public void createFloatingWidget() {
+        //Check if the application has draw over other apps permission or not?
+        //This permission is by default available for API<23. But for API > 23
+        //you have to ask for the permission in runtime.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            //If the draw over permission is not available open the settings screen
+            //to grant the permission.
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
+        } else
+            //If permission is granted start floating widget service
+            startFloatingWidgetService();
+
+    }
+
+    /*  Start Floating widget service and finish current activity */
+    private void startFloatingWidgetService() {
+        Intent in = new Intent(MainActivity.this, FloatingWidgetService.class);
+        in.putExtra("code", tvShortAddress.getText().toString());
+        startService(in);
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE) {
+            //Check if the permission is granted or not.
+            Log.d("=======================", resultCode + "");
+            if (resultCode == RESULT_OK)
+                //If permission granted start floating widget service
+                startFloatingWidgetService();
+            else
+                //Permission is not available then display toast
+                Toast.makeText(this,
+                        getResources().getString(R.string.draw_other_app_permission_denied),
+                        Toast.LENGTH_LONG).show();
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
